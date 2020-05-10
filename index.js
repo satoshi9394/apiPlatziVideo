@@ -4,7 +4,7 @@ const app = express();
 const { config } = require('./config/index');
 
 app.get('/', function(req, res) {
-  res.send("Hello word");
+  res.send("Hello word")
 })
 
 app.get('/json', function(req,res) {
