@@ -12,5 +12,5 @@ app.get('/json', function(req,res) {
 });
 
 app.listen(config.port, function() {
-  console.log(`Escuchando en http://localhost:${config.port}`);
+  console.log(`Escuchando en http://localhost:${config.port}`)
 });
