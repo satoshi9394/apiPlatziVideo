@@ -3,14 +3,10 @@ const app = express();
 
 const { config } = require('./config/index');
 
-app.get('/', function(req, res) {
-  res.send("Hello word")
-})
+const moviesApi = require('./routes/movies.js')
 
-app.get('/json', function(req,res) {
-  res.json({hello: 'word'})
-});
+moviesApi(app);
 
 app.listen(config.port, function() {
-  console.log(`Escuchando en http://localhost:${config.port}`)
+  console.log(`Escuchando en http://localhost:${config.port}`);
 });
