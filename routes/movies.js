@@ -12,6 +12,7 @@ function moviesApi(app) {
     const { tags } = req.query;
     try {
       const movies = await moviesService.getMovies({ tags });
+      //throw new Error('Error getting movies') validar la capa de errores
       res.status(200).json({
         data: movies,
         msg: "Movies listed"
@@ -22,7 +23,7 @@ function moviesApi(app) {
   })
 
   router.get("/:movieId", async function(req, res, next){
-    const { movieId } = req.param
+    const { movieId } = req.params
     try {
       const movies = await moviesService.getMovie({ movieId });
       res.status(200).json({
@@ -49,7 +50,7 @@ function moviesApi(app) {
 
   router.put("/:movieId", async function(req, res, next){
     const { body: movie } = req
-    const { movieId } = req.param
+    const { movieId } = req.params
     try {
       const updateMovieId = await moviesService.updateMovie({ 
         movieId, 
@@ -64,7 +65,7 @@ function moviesApi(app) {
     }
   })
   router.delete("/:movieId", async function(req, res, next){
-    const { movieId } = req.param
+    const { movieId } = req.params
     try {
       const deleteMovieId = await moviesService.deleteMovie({ movieId });;
       res.status(200).json({
