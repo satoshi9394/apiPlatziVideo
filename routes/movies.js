@@ -1,6 +1,14 @@
 const express = require('express');
 const MoviesService = require('../services/movies')
 
+const {
+  movieIdSchema,
+  createMovieSchema,
+  updateMovieSchema
+} = require('../utils/schema/movies')
+
+const validationHandler = require('../utils/middleware/validationHandler')
+
 
 
 function moviesApi(app) {
@@ -22,7 +30,8 @@ function moviesApi(app) {
     }
   })
 
-  router.get("/:movieId", async function(req, res, next){
+  router.get("/:movieId",validationHandler({ movieId: movieIdSchema }, 'params'), 
+    async function(req, res, next){
     const { movieId } = req.params
     try {
       const movies = await moviesService.getMovie({ movieId });
@@ -35,7 +44,9 @@ function moviesApi(app) {
     }
   })
 
-  router.post("/", async function(req, res, next){
+  router.post("/", 
+    validationHandler(createMovieSchema), 
+    async function(req, res, next){
     const { body: movie } = req
     try {
       const createdMovieId = await moviesService.createMovie({ movie });
@@ -48,7 +59,10 @@ function moviesApi(app) {
     }
   })
 
-  router.put("/:movieId", async function(req, res, next){
+  router.put("/:movieId",
+  validationHandler({ movieId: movieIdSchema },'params'),
+  validationHandler(updateMovieSchema), 
+  async function(req, res, next){
     const { body: movie } = req
     const { movieId } = req.params
     try {
@@ -64,7 +78,10 @@ function moviesApi(app) {
       next(err);
     }
   })
-  router.delete("/:movieId", async function(req, res, next){
+
+  router.delete("/:movieId",
+  validationHandler({ movieId: movieIdSchema },'params'), 
+  async function(req, res, next){
     const { movieId } = req.params
     try {
       const deleteMovieId = await moviesService.deleteMovie({ movieId });;
@@ -76,7 +93,9 @@ function moviesApi(app) {
       next(err);
     }
   })
-  router.patch('/:movieId', async (req, res, next) => {
+  router.patch('/:movieId', 
+  validationHandler({ movieId: movieIdSchema },'params'),
+  async (req, res, next) => {
     const { movieId } = req.params;
     const { body: movie } = req;
     try {
