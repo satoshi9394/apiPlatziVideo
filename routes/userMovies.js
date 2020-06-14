@@ -29,4 +29,40 @@ function userMoviesApi(app) {
       }
     }
   );
+  router.post('/', validationHandler(createUserMovieSchema), 
+    async function(req, res, next){
+      const { body: userMovie } = req;
+      try {
+        const createdUserMovieId = await userMoviesServices.createUserMovie({
+          userMovie
+        });
+        res.status(201).json({
+          data: createdUserMovieId,
+          message: 'user movie created'
+        })
+      } catch (error) {
+          next(error)
+      }
+    }
+  );
+  
+  router.delete('/:userMovieId', validationHandler({ userMovieId: movieIdSchema }, 'params' ),
+    async function(req, res, next) {
+      const { userMovieId } = req.params
+
+      try {
+        const deletedUserMovieId = await userMoviesServices.deleteUserMovie({
+          userMovieId
+        })
+        res.status(200).json({
+          data: deletedUserMovieId,
+          message: 'user movie delete'
+        })
+      } catch (error) {
+        next(error)
+      }
+    }
+  )
 }
+
+module.exports = userMoviesApi;
