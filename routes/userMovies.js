@@ -10,7 +10,7 @@ const { createUserMovieSchema } = require('../utils/schema/userMovies')
 
 function userMoviesApi(app) {
   const router = express.Router();
-  app.user('/api/user-movies', router)
+  app.use('/api/user-movies', router)
 
   const userMoviesServices = new UserMoviesServices()
 

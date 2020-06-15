@@ -1,6 +1,4 @@
 const passport = require("passport")
-
-const passport = require('passport');
 const { BasicStrategy } = require('passport-http');
 const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt')
@@ -20,7 +18,7 @@ passport.use(new BasicStrategy(async function(email, password, cb) {
         return cb(boom.unauthorized(), false);
       }
       delete user.password;
-      
+
       return cb(null, user)
     } catch (error) {
       return cb(error)
